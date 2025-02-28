@@ -72,18 +72,15 @@ public class OfferController {
   @RequestMapping(value = "brand/{brandId}/partnumber/{partnumber}/offer", method = RequestMethod.GET)
   @ResponseStatus(HttpStatus.OK)
   public List<OfferByPartNumber> getOfferByPartNumber(Integer brandId, String partnumber) {
-
-    //TODO implement it!.
-
     List<OfferByPartNumber> lstOfferByPartNumber = new ArrayList<>();
-    for(Offer offer: offerList){
-      if(offer.getBrandId()== brandId && offer.getProductPartnumber().equalsIgnoreCase(partnumber)){
-        OfferByPartNumber offerByPartNumber = new OfferByPartNumber();
-        offerByPartNumber.setCurrencyIso(offer.getCurrencyIso());
-        offerByPartNumber.setEndDate(offer.getEndDate());
-        offerByPartNumber.setStartDate(offer.getStartDate());
-        offerByPartNumber.setPrice(offer.getPrice());
-        lstOfferByPartNumber.add(offerByPartNumber);
+    for (Offer offer : offerList) {
+      if (offer.getBrandId().equals(brandId) && offer.getProductPartnumber().equalsIgnoreCase(partnumber)) {
+        lstOfferByPartNumber.add(new OfferByPartNumber(
+                offer.getCurrencyIso(),
+                offer.getStartDate(),
+                offer.getPrice(),
+                offer.getEndDate()
+        ));
       }
     }
     return lstOfferByPartNumber;
